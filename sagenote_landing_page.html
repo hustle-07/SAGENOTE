@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sagenote — Organic Study Notes</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Lora (Serif) & Plus Jakarta Sans (Sans-Serif) for exact brand match -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Lora', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Soft premium curves and light natural drop shadows */
+    .premium-card {
+      background-color: #FAF9F6;
+      border: 1.5px solid rgba(45, 65, 47, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(45, 65, 47, 0.04);
+      border-radius: 1.5rem;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F4EFEB;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2D412F;
+      border-radius: 99px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F4EFEB] text-[#2D412F] font-sans selection:bg-[#E3ECE1] selection:text-[#2D412F] relative antialiased overflow-x-hidden">
+
+  <!-- Header Navigation -->
+  <nav class="sticky top-0 z-40 bg-[#F4EFEB]/90 backdrop-blur-md px-6 py-4 border-b border-[#2D412F]/10">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand Logo matches exact uploading reference -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToElement('hero')">
+        <div class="bg-[#2D412F] w-10 h-10 rounded-xl flex items-center justify-center border border-[#2D412F] transform hover:rotate-3 transition-all duration-200 shadow-sm">
+          <!-- Hand-crafted elegant white leaf outline -->
+          <svg viewBox="0 0 100 100" class="w-6 h-6 text-white">
+            <path d="M50 85 C30 70, 20 45, 50 15 C80 45, 70 70, 50 85 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M50 85 C50 65, 50 45, 50 15" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M50 60 C58 52, 63 48, 65 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="text-2xl font-serif font-bold tracking-tight text-[#2D412F]">Sagenote</span>
+          <span class="text-[10px] block text-[#2D412F]/60 font-semibold tracking-wider uppercase -mt-1">organic workspace</span>
+        </div>
+      </div>
+
+      <!-- Compact Action Links -->
+      <div class="flex items-center gap-4">
+        
+        <!-- Products Dropdown -->
+        <div class="relative group hidden sm:inline-block">
+          <button class="text-sm font-semibold text-[#2D412F]/80 hover:text-[#2D412F] transition-colors flex items-center gap-1 py-2">
+            Products
+            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          
+          <div class="absolute right-0 mt-0 w-64 bg-white border border-[#2D412F]/10 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2">
+            
+            <!-- Sagenote -->
+            <div class="p-3 hover:bg-[#F4EFEB] rounded-xl transition-colors cursor-pointer" onclick="switchProduct('sagenote')">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#2D412F] text-sm">Sagenote</span>
+                <span class="text-[9px] bg-[#E3ECE1] text-[#2D412F] px-2 py-0.5 rounded-full font-bold">Notes</span>
+              </div>
+              <p class="text-xs text-[#2D412F]/60 mt-1 mb-2">AI generated organic study notes.</p>
+              <div class="flex gap-2">
+                <a href="app-debug.apk" download class="flex-1 text-center text-[10px] font-bold text-[#2D412F] bg-white border border-[#2D412F]/10 px-2 py-1.5 rounded-lg hover:bg-[#2D412F] hover:text-white transition-colors" onclick="event.stopPropagation()">Download APK</a>
+                <a href="sagenote v1 Setup 1.0.0.exe" download class="flex-1 text-center text-[10px] font-bold text-[#2D412F] bg-white border border-[#2D412F]/10 px-2 py-1.5 rounded-lg hover:bg-[#2D412F] hover:text-white transition-colors" onclick="event.stopPropagation()">Download EXE</a>
+              </div>
+            </div>
+
+            <!-- Sagescore AI -->
+            <div class="p-3 hover:bg-[#F4EFEB] rounded-xl transition-colors mt-1 cursor-pointer" onclick="switchProduct('sagescore')">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#2D412F] text-sm">Sagescore AI</span>
+                <span class="text-[9px] bg-[#E3ECE1] text-[#2D412F] px-2 py-0.5 rounded-full font-bold">AI</span>
+              </div>
+              <p class="text-xs text-[#2D412F]/60 mt-1 mb-2">Smart scoring and insights.</p>
+              <div class="flex gap-2">
+                <a href="sagescore-ai.apk" download class="flex-1 text-center text-[10px] font-bold text-[#2D412F] bg-white border border-[#2D412F]/10 px-2 py-1.5 rounded-lg hover:bg-[#2D412F] hover:text-white transition-colors" onclick="event.stopPropagation()">Download APK</a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <button onclick="scrollToElement('sandbox-app')" class="bg-[#2D412F] hover:bg-[#3D5640] text-white font-semibold py-2 px-4 rounded-xl text-xs transition-all duration-200">
+          Try Live Sandbox
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Global Custom Toast Notification -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-[#2D412F] text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-3 transition-all transform duration-300">
+    <span class="text-lg">🍃</span>
+    <span id="toast-message" class="font-medium text-xs">Action Completed!</span>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+
+    <!-- HERO / DOWNLOADS SECTION -->
+    <section id="hero" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+      
+      <!-- Left: Minimalist value proposition & Instant App files -->
+      <div class="lg:col-span-6 flex flex-col gap-6 text-left">
+        <div id="hero-pill" class="inline-flex items-center gap-2 bg-[#E3ECE1] border border-[#2D412F]/20 px-3.5 py-1 rounded-full self-start text-[11px] font-bold tracking-wider uppercase">
+          🌿 Pure, fast and client-side
+        </div>
+        
+        <h1 id="hero-title" class="text-4xl sm:text-5xl font-serif font-bold tracking-tight text-[#2D412F] leading-[1.15]">
+          Grow your study notes, <br><span class="italic font-normal">distraction-free.</span>
+        </h1>
+        
+        <p id="hero-desc" class="text-sm sm:text-base text-[#2D412F]/80 max-w-md leading-relaxed font-medium">
+          A light, serene workspace crafted with a warm beige aesthetic to preserve concentration. No databases, no bloat—just effortless study metrics, organic design, and instant note exporting.
+        </p>
+
+        <!-- Dynamic download buttons with real micro-interactions -->
+        <div id="downloads" class="flex flex-wrap gap-3 mt-2">
+          <a href="app-debug.apk" download class="bg-[#2D412F] text-white hover:bg-[#3D5640] font-semibold py-3 px-5 rounded-xl flex items-center gap-2 text-xs transition-all duration-150 transform hover:-translate-y-0.5 shadow-sm">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.5 10C17.5 7.24 14.76 5 12 5C9.24 5 7 7.24 7 10" />
+              <path d="M5 10V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V10" stroke="currentColor" stroke-width="1.5" fill="none" />
+              <circle cx="10" cy="11" r="1"/>
+              <circle cx="14" cy="11" r="1"/>
+            </svg>
+            Download APK
+          </a>
+
+          <a href="sagenote v1 Setup 1.0.0.exe" download class="bg-[#2D412F]/10 text-[#2D412F] hover:bg-[#2D412F]/20 font-semibold py-3 px-5 rounded-xl flex items-center gap-2 text-xs transition-all duration-150 transform hover:-translate-y-0.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+            Download EXE
+          </a>
+        </div>
+
+        <div id="hero-features" class="flex items-center gap-4 text-xs font-semibold text-[#2D412F]/60 mt-2">
+          <span>✓ Lightweight (4MB)</span>
+          <span>✓ Works Completely Offline</span>
+        </div>
+      </div>
+
+      <!-- Right: Pure Minimal Visual Element explaining clean design -->
+      <div class="lg:col-span-6 flex justify-center">
+        <div class="bg-[#FAF9F6] border border-[#2D412F]/10 rounded-[2rem] p-8 max-w-sm w-full shadow-sm text-center">
+          <div class="bg-[#2D412F] w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+            <svg viewBox="0 0 100 100" class="w-10 h-10 text-white">
+              <path d="M50 85 C30 70, 20 45, 50 15 C80 45, 70 70, 50 85 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M50 85 C50 65, 50 45, 50 15" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 id="philosophy-title" class="font-serif font-bold text-lg text-[#2D412F]">Sagenote Philosophy</h3>
+          <p id="philosophy-desc" class="text-xs text-[#2D412F]/70 mt-2 leading-relaxed">
+            Beautiful organic themes should make learning enjoyable. By using an ultra-light, neutral-beige palette and simple workflows, we bring focus back to what truly matters.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- LIVE APP INTERACTIVE DEMO (Exact Match to 1000421888.jpg Layout) -->
+    <section id="sandbox-app" class="pt-8 mb-16">
+      
+      <div class="text-center max-w-md mx-auto mb-10">
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#2D412F]">Interactive Browser Sandbox</h2>
+        <p class="text-xs text-[#2D412F]/70 mt-1">This simulator functions just like the real Sagenote application. Click and test any metric below!</p>
+      </div>
+
+      <!-- Exact Mobile Device Replication -->
+      <div class="max-w-md mx-auto bg-[#F4EFEB] border border-[#2D412F]/20 rounded-[2.5rem] p-4 shadow-xl relative">
+        <div class="bg-[#F4EFEB] rounded-[2rem] p-4 max-h-[820px] overflow-y-auto custom-scrollbar">
+          
+          <!-- Mock Status bar style top -->
+          <div class="flex items-center justify-between text-[11px] font-bold text-[#2D412F]/60 mb-4 px-2">
+            <span>10:28</span>
+            <div class="flex items-center gap-1.5">
+              <span>5G+</span>
+              <span>🔋 81%</span>
+            </div>
+          </div>
+
+          <!-- App Mock Header -->
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-[#2D412F] w-9 h-9 rounded-xl flex items-center justify-center border border-[#2D412F] cursor-pointer hover:opacity-90 transition-opacity">
+              <!-- Menu button lines matching screenshot -->
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </div>
+            <span class="text-lg font-serif font-bold text-[#2D412F]">Sagenote</span>
+          </div>
+
+          <!-- Section Label -->
+          <div class="text-[9px] font-bold tracking-wider text-[#9E8259] uppercase mb-1">
+            OVERVIEW
+          </div>
+
+          <!-- Welcome Message -->
+          <h2 class="text-2xl font-serif font-bold text-[#2D412F] leading-snug">Welcome back, Prashant</h2>
+          <p class="text-xs text-[#2D412F]/60 mb-4 font-medium">Here's what your study workspace looks like today.</p>
+
+          <!-- Interactive Action Button (+ New Note) -->
+          <button onclick="openNewNoteModal()" class="bg-[#2D412F] hover:bg-[#3D5640] text-white font-medium py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 transition-all duration-150 transform active:scale-95 mb-5 shadow-sm">
+            <span>+</span> New note
+          </button>
+
+          <!-- Widget 1: Streak (Clickable to increase!) -->
+          <div onclick="incrementStreak()" class="bg-white p-4 rounded-2xl border border-[#2D412F]/5 shadow-sm flex items-center justify-between mb-3 cursor-pointer hover:bg-[#FAF9F6] transition-all">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl animate-pulse">🔥</span>
+              <div>
+                <h4 id="streak-title" class="font-serif font-bold text-base text-[#2D412F]">1-day streak</h4>
+                <p class="text-[10px] text-[#2D412F]/60">Keep it going — study something today.</p>
+              </div>
+            </div>
+            <!-- Interactive day dots matching screenshot -->
+            <div id="streak-dots-container" class="flex gap-1.5 items-center">
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#E5DFD9]"></span>
+              <span class="w-2 h-2 rounded-full bg-[#2D412F]"></span>
+            </div>
+          </div>
+
+          <!-- Widget 2: Flashcards Badge (Triggers mini quiz game!) -->
+          <div onclick="startFlashcardReview()" class="inline-flex items-center gap-1.5 bg-[#E3ECE1] hover:bg-[#D5E4D2] border border-[#2D412F]/10 px-3 py-1.5 rounded-full text-[10px] font-bold text-[#2D412F] cursor-pointer transition-all mb-5 transform active:scale-95">
+            <svg class="w-3.5 h-3.5 text-[#2D412F]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 11H15V4" />
+            </svg>
+            <span id="flashcard-badge-text">10 flashcards due for review</span>
+          </div>
+
+          <!-- Metrics Container (Matches Exact Grid from reference) -->
+          <div class="grid grid-cols-1 gap-3 mb-6">
+            <div class="bg-white p-4 rounded-2xl border border-[#2D412F]/5 shadow-sm text-left">
+              <h3 id="stat-notes-count" class="text-3xl font-serif font-bold text-[#2D412F]">3</h3>
+              <p class="text-[10px] text-[#2D412F]/60 font-semibold uppercase mt-0.5">Notes generated</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-[#2D412F]/5 shadow-sm text-left">
+              <h3 class="text-3xl font-serif font-bold text-[#2D412F]">0</h3>
+              <p class="text-[10px] text-[#2D412F]/60 font-semibold uppercase mt-0.5">Included a diagram</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-[#2D412F]/5 shadow-sm text-left">
+              <h3 class="text-3xl font-serif font-bold text-[#2D412F]">45</h3>
+              <p class="text-[10px] text-[#2D412F]/60 font-semibold uppercase mt-0.5">Quiz questions created</p>
+            </div>
+          </div>
+
+          <!-- Recent Notes Section (Dynamic list matching reference) -->
+          <div class="bg-white p-5 rounded-3xl border border-[#2D412F]/5 shadow-sm text-left">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-serif font-bold text-base text-[#2D412F]">Recent notes</h3>
+              <span class="text-xs text-[#2D412F]/60 font-semibold cursor-pointer hover:underline" onclick="triggerToast('Viewing all notes...')">View all</span>
+            </div>
+
+            <!-- Notes List Rows -->
+            <div id="notes-list-target" class="space-y-4">
+              <!-- Rendered Dynamically by JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#F4EFEB] border-t border-[#2D412F]/10 py-12 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="bg-[#2D412F] w-8 h-8 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 100 100" class="w-5 h-5 text-white">
+            <path d="M50 85 C30 70, 20 45, 50 15 C80 45, 70 70, 50 85 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M50 85 C50 65, 50 45, 50 15" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-serif font-bold text-base text-[#2D412F]">Sagenote</span>
+      </div>
+
+      <p class="text-xs text-[#2D412F]/50 font-medium">© 2026 Sagenote. Formatted to perfect organic standards. 🌱</p>
+    </div>
+  </footer>
+
+  <!-- MODAL: ADD NEW NOTE -->
+  <div id="new-note-modal" class="hidden fixed inset-0 bg-[#2D412F]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-[#2D412F]/10 rounded-3xl p-6 max-w-sm w-full shadow-xl transition-all duration-200">
+      <div class="flex justify-between items-center mb-4 border-b border-[#F4EFEB] pb-3">
+        <h4 class="font-serif font-bold text-lg text-[#2D412F]">Write New Note</h4>
+        <button onclick="closeNewNoteModal()" class="text-[#2D412F]/60 hover:text-[#2D412F] text-sm font-bold">Close</button>
+      </div>
+
+      <form onsubmit="handleNewNoteSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-[10px] font-bold text-[#2D412F]/60 uppercase mb-1">Title</label>
+          <input type="text" id="note-input-title" required placeholder="e.g. Newton's Laws" class="w-full border border-[#2D412F]/20 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#2D412F] bg-slate-50">
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-[#2D412F]/60 uppercase mb-1">Note Content</label>
+          <textarea id="note-input-content" required placeholder="Type notes here..." rows="4" class="w-full border border-[#2D412F]/20 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#2D412F] bg-slate-50 resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-[#2D412F] hover:bg-[#3D5640] text-white py-2.5 rounded-xl font-bold text-xs transition-colors shadow-sm">
+          Save note
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: READ/EDIT EXISTING NOTE -->
+  <div id="read-note-modal" class="hidden fixed inset-0 bg-[#2D412F]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-[#2D412F]/10 rounded-3xl p-6 max-w-sm w-full shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-[10px] font-bold text-[#9E8259] tracking-wider uppercase">Active Note</span>
+        <button onclick="closeReadNoteModal()" class="text-[#2D412F]/60 hover:text-[#2D412F] text-xs font-bold bg-[#F4EFEB] px-2 py-1 rounded-lg">Close</button>
+      </div>
+      <h3 id="read-note-title" class="font-serif font-bold text-xl text-[#2D412F] mb-3"></h3>
+      <p id="read-note-content" class="text-xs text-[#2D412F]/80 leading-relaxed whitespace-pre-wrap max-h-60 overflow-y-auto custom-scrollbar pr-1"></p>
+    </div>
+  </div>
+
+  <!-- MODAL: MINI FLASHCARDS QUIZ -->
+  <div id="flashcard-modal" class="hidden fixed inset-0 bg-[#2D412F]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-[#2D412F]/10 rounded-3xl p-6 max-w-sm w-full shadow-xl text-center">
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-[10px] font-bold text-[#2D412F]/60 uppercase">Flashcard Review</span>
+        <button onclick="closeFlashcardModal()" class="text-[#2D412F]/60 hover:text-[#2D412F] text-xs font-bold">Skip</button>
+      </div>
+
+      <div onclick="flipFlashcard()" class="bg-[#F4EFEB] border border-[#2D412F]/10 rounded-2xl p-8 min-h-[160px] flex flex-col justify-center items-center cursor-pointer hover:opacity-95 transition-opacity mb-6">
+        <span class="text-[9px] font-bold text-[#9E8259] tracking-wider uppercase mb-2" id="flashcard-state">QUESTION</span>
+        <p id="flashcard-text" class="text-sm font-semibold text-[#2D412F]"></p>
+        <span class="text-[10px] text-slate-400 mt-4 italic">Click card to Flip</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="nextFlashcard(false)" class="w-1/2 border border-[#2D412F]/20 hover:bg-slate-50 text-xs font-bold py-2 rounded-xl">Hard ✕</button>
+        <button onclick="nextFlashcard(true)" class="w-1/2 bg-[#2D412F] hover:bg-[#3D5640] text-white text-xs font-bold py-2 rounded-xl">Got it ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PROGRESS DOWNLOAD SIMULATOR -->
+  <div id="download-modal" class="hidden fixed inset-0 bg-[#2D412F]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#FAF9F6] border border-[#2D412F]/10 rounded-3xl p-6 max-w-sm w-full shadow-xl">
+      <div class="flex justify-between items-start mb-4">
+        <div class="flex items-center gap-2">
+          <div class="bg-[#2D412F] w-7 h-7 rounded-lg flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-4 h-4 text-white">
+              <path d="M50 85 C30 70, 20 45, 50 15 C80 45, 70 70, 50 85 Z" fill="none" stroke="currentColor" stroke-width="6"/>
+            </svg>
+          </div>
+          <h4 class="font-serif font-bold text-base text-[#2D412F]">Sagenote Downloader</h4>
+        </div>
+        <button onclick="closeDownloadModal()" class="text-xs text-[#2D412F]/60 font-bold">Dismiss</button>
+      </div>
+
+      <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+        Building bundle of Sagenote for <strong id="modal-platform">Platform</strong>. Please stand by while our server generates your package.
+      </p>
+
+      <div class="space-y-2">
+        <div class="flex justify-between items-center text-xs font-bold text-[#2D412F]">
+          <span id="dl-status">Compiling Assets...</span>
+          <span id="dl-percentage">0%</span>
+        </div>
+        <div class="w-full bg-[#E5DFD9] h-3.5 rounded-full p-0.5 overflow-hidden">
+          <div id="dl-progress-bar" class="bg-[#2D412F] h-full rounded-full transition-all duration-100" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div id="dl-complete-message" class="hidden mt-4 bg-[#E3ECE1] p-3 rounded-xl text-[11px] text-[#2D412F] font-semibold animate-bounce">
+        🎉 Bundle built successfully! Installation is complete. Enjoy.
+      </div>
+    </div>
+  </div>
+
+  <!-- SAGENOTE STATE MANAGEMENT SCRIPT -->
+  <script>
+    const productData = {
+      'sagenote': {
+        title: 'Grow your study notes, <br><span class="italic font-normal">distraction-free.</span>',
+        desc: 'A light, serene workspace crafted with a warm beige aesthetic to preserve concentration. No databases, no bloat—just effortless study metrics, organic design, and instant note exporting.',
+        pill: '🌿 Pure, fast and client-side',
+        philosophyTitle: 'Sagenote Philosophy',
+        philosophyDesc: 'Beautiful organic themes should make learning enjoyable. By using an ultra-light, neutral-beige palette and simple workflows, we bring focus back to what truly matters.',
+        downloads: `
+          <a href="app-debug.apk" download class="bg-[#2D412F] text-white hover:bg-[#3D5640] font-semibold py-3 px-5 rounded-xl flex items-center gap-2 text-xs transition-all duration-150 transform hover:-translate-y-0.5 shadow-sm">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 10C17.5 7.24 14.76 5 12 5C9.24 5 7 7.24 7 10" /><path d="M5 10V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V10" stroke="currentColor" stroke-width="1.5" fill="none" /><circle cx="10" cy="11" r="1"/><circle cx="14" cy="11" r="1"/></svg> Download APK
+          </a>
+          <a href="sagenote v1 Setup 1.0.0.exe" download class="bg-[#2D412F]/10 text-[#2D412F] hover:bg-[#2D412F]/20 font-semibold py-3 px-5 rounded-xl flex items-center gap-2 text-xs transition-all duration-150 transform hover:-translate-y-0.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" /></svg> Download EXE
+          </a>`,
+        features: `
+          <span>✓ Lightweight (4MB)</span>
+          <span>✓ Works Completely Offline</span>
+        `,
+        showSandbox: true
+      },
+      'sagescore': {
+        title: 'AI Scoring & Insights, <br><span class="italic font-normal">at your fingertips.</span>',
+        desc: 'Advanced machine learning models evaluate your knowledge seamlessly. Sagescore AI analyzes patterns, predicts outcomes, and boosts your performance effortlessly.',
+        pill: '🧠 AI-powered scoring',
+        philosophyTitle: 'Sagescore Philosophy',
+        philosophyDesc: 'Data-driven insights empower better decisions. By simplifying complex analytics into an intuitive interface, Sagescore helps you focus on continuous improvement.',
+        downloads: `
+          <a href="sagescore-ai.apk" download class="bg-[#2D412F] text-white hover:bg-[#3D5640] font-semibold py-3 px-5 rounded-xl flex items-center gap-2 text-xs transition-all duration-150 transform hover:-translate-y-0.5 shadow-sm">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 10C17.5 7.24 14.76 5 12 5C9.24 5 7 7.24 7 10" /><path d="M5 10V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V10" stroke="currentColor" stroke-width="1.5" fill="none" /><circle cx="10" cy="11" r="1"/><circle cx="14" cy="11" r="1"/></svg> Download APK
+          </a>`,
+        features: `
+          <span>✓ Smart Scoring Models</span>
+          <span>✓ Real-time Sync</span>
+        `,
+        showSandbox: false
+      }
+    };
+
+    function switchProduct(product) {
+      const data = productData[product];
+      document.getElementById('hero-title').innerHTML = data.title;
+      document.getElementById('hero-desc').innerHTML = data.desc;
+      document.getElementById('hero-pill').innerHTML = data.pill;
+      document.getElementById('downloads').innerHTML = data.downloads;
+      document.getElementById('hero-features').innerHTML = data.features;
+      document.getElementById('philosophy-title').innerHTML = data.philosophyTitle;
+      document.getElementById('philosophy-desc').innerHTML = data.philosophyDesc;
+      
+      const sandbox = document.getElementById('sandbox-app');
+      if(data.showSandbox) {
+        sandbox.classList.remove('hidden');
+      } else {
+        sandbox.classList.add('hidden');
+      }
+      triggerToast('Switched to ' + (product === 'sagenote' ? 'Sagenote' : 'Sagescore AI'));
+      scrollToElement('hero');
+    }
+
+    // In-Memory Database matching exactly your "Recent Notes" screenshot style & structure
+    let userNotes = [
+      {
+        id: 1,
+        title: "Motion and its Types",
+        content: "Types of mechanical motion includes:\n- Rectilinear Motion: Movement along a straight-line path.\n- Curvilinear Motion: Movement along a curved trajectory.\n- Rotary Motion: Circular path around a centered pivot.\n- Oscillatory Motion: Repetitive back and forth motion.",
+        updatedAt: "2026-07-08 16:45 UTC"
+      },
+      {
+        id: 2,
+        title: "Newton's Laws",
+        content: "1. Law of Inertia: Body stays in rest or uniform motion unless acted upon by force.\n2. F = ma: Force equals mass times acceleration.\n3. Action & Reaction: Every action has an equal and opposite reaction.",
+        updatedAt: "2026-07-08 14:53 UTC"
+      },
+      {
+        id: 3,
+        title: "Types of Motion",
+        content: "Translational vs Rotational motion. Translational occurs when all points of a moving body move uniformly in the exact same direction.",
+        updatedAt: "2026-07-08 12:10 UTC"
+      }
+    ];
+
+    // Simple Flashcards database for review badge play interaction
+    const flashcards = [
+      { question: "What is Newton's Second Law?", answer: "Force = mass x acceleration (F=ma)" },
+      { question: "Define Rectilinear Motion.", answer: "Motion that takes place in a perfectly straight line." },
+      { question: "What represents a 1-day study streak?", answer: "Sagenote user retention metrics showing continuous growth." }
+    ];
+
+    let currentStreak = 1;
+    let currentFlashcardIndex = 0;
+    let flashcardSide = "Q"; // Q = Question, A = Answer
+    let dlInterval = null;
+
+    // Toast Notification helper
+    function triggerToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex', 'animate-bounce');
+      
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex', 'animate-bounce');
+      }, 2500);
+    }
+
+    // Scroll Anchor Utility
+    function scrollToElement(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Increments user streak interactively when user clicks streak card
+    function incrementStreak() {
+      currentStreak++;
+      document.getElementById('streak-title').textContent = `${currentStreak}-day streak`;
+      
+      // Add visual dot indicators on screen to match streak increment
+      const container = document.getElementById('streak-dots-container');
+      const newDot = document.createElement('span');
+      newDot.className = "w-2 h-2 rounded-full bg-[#2D412F]";
+      container.appendChild(newDot);
+      
+      triggerToast("🔥 Streak extended! Keep studying.");
+    }
+
+    // Start Flashcard review game
+    function startFlashcardReview() {
+      currentFlashcardIndex = 0;
+      flashcardSide = "Q";
+      document.getElementById('flashcard-modal').classList.remove('hidden');
+      updateFlashcardUI();
+    }
+
+    function closeFlashcardModal() {
+      document.getElementById('flashcard-modal').classList.add('hidden');
+    }
+
+    function updateFlashcardUI() {
+      const current = flashcards[currentFlashcardIndex];
+      const stateLabel = document.getElementById('flashcard-state');
+      const textLabel = document.getElementById('flashcard-text');
+
+      if (flashcardSide === "Q") {
+        stateLabel.textContent = "QUESTION";
+        textLabel.textContent = current.question;
+      } else {
+        stateLabel.textContent = "ANSWER";
+        textLabel.textContent = current.answer;
+      }
+    }
+
+    function flipFlashcard() {
+      flashcardSide = flashcardSide === "Q" ? "A" : "Q";
+      updateFlashcardUI();
+    }
+
+    function nextFlashcard(wasCorrect) {
+      if (wasCorrect) {
+        triggerToast("✓ Great job!");
+      }
+      currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+      flashcardSide = "Q";
+      updateFlashcardUI();
+    }
+
+    // Render Recent Note rows exactly like image
+    function renderNotes() {
+      const target = document.getElementById('notes-list-target');
+      const countLabel = document.getElementById('stat-notes-count');
+      target.innerHTML = '';
+
+      countLabel.textContent = userNotes.length;
+
+      userNotes.forEach(note => {
+        const row = document.createElement('div');
+        row.className = "flex items-center justify-between py-3 border-b border-[#F4EFEB] last:border-0";
+        row.innerHTML = `
+          <div class="pr-2">
+            <h4 class="font-serif font-bold text-sm text-[#2D412F] truncate max-w-[200px]">${note.title}</h4>
+            <span class="text-[9px] text-[#2D412F]/50 block mt-0.5">${note.updatedAt}</span>
+          </div>
+          <button onclick="readNote(${note.id})" class="border border-[#2D412F]/20 hover:bg-[#F4EFEB] text-[#2D412F] text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors">
+            Open
+          </button>
+        `;
+        target.appendChild(row);
+      });
+    }
+
+    // Read note modal
+    function readNote(id) {
+      const note = userNotes.find(n => n.id === id);
+      if (note) {
+        document.getElementById('read-note-title').textContent = note.title;
+        document.getElementById('read-note-content').textContent = note.content;
+        document.getElementById('read-note-modal').classList.remove('hidden');
+      }
+    }
+
+    function closeReadNoteModal() {
+      document.getElementById('read-note-modal').classList.add('hidden');
+    }
+
+    // Write Note Modal control
+    function openNewNoteModal() {
+      document.getElementById('new-note-modal').classList.remove('hidden');
+    }
+
+    function closeNewNoteModal() {
+      document.getElementById('new-note-modal').classList.add('hidden');
+    }
+
+    function handleNewNoteSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('note-input-title').value;
+      const content = document.getElementById('note-input-content').value;
+
+      const dateObj = new Date();
+      const timestamp = dateObj.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+
+      const newNote = {
+        id: Date.now(),
+        title,
+        content,
+        updatedAt: timestamp
+      };
+
+      userNotes.unshift(newNote);
+      renderNotes();
+      closeNewNoteModal();
+      
+      // Reset fields
+      document.getElementById('note-input-title').value = '';
+      document.getElementById('note-input-content').value = '';
+
+      triggerToast("🌱 Note stored in sandbox workspace.");
+    }
+
+    // Simulated downloads logic with actual interactive timers
+    function simulateDownload(platform) {
+      const modal = document.getElementById('download-modal');
+      const pLabel = document.getElementById('modal-platform');
+      const bar = document.getElementById('dl-progress-bar');
+      const percent = document.getElementById('dl-percentage');
+      const status = document.getElementById('dl-status');
+      const completeMsg = document.getElementById('dl-complete-message');
+
+      pLabel.textContent = platform;
+      bar.style.width = '0%';
+      percent.textContent = '0%';
+      status.textContent = 'Allocating Leaf memory...';
+      completeMsg.classList.add('hidden');
+      modal.classList.remove('hidden');
+
+      let progress = 0;
+      clearInterval(dlInterval);
+
+      dlInterval = setInterval(() => {
+        progress += 5;
+        bar.style.width = `${progress}%`;
+        percent.textContent = `${progress}%`;
+
+        if (progress === 40) {
+          status.textContent = 'Downloading Assets...';
+        } else if (progress === 75) {
+          status.textContent = 'Finalizing binaries...';
+        } else if (progress >= 100) {
+          clearInterval(dlInterval);
+          status.textContent = 'Done!';
+          completeMsg.classList.remove('hidden');
+          triggerToast(`📦 Sagenote for ${platform} ready to run.`);
+        }
+      }, 80);
+    }
+
+    function closeDownloadModal() {
+      clearInterval(dlInterval);
+      document.getElementById('download-modal').classList.add('hidden');
+    }
+
+    // Run render step
+    renderNotes();
+  </script>
+</body>
+</html>
